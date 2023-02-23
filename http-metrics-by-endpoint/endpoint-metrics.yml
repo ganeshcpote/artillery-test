@@ -1,0 +1,21 @@
+config:
+  target: https://artillery.io
+  phases:
+    - duration: 20
+      arrivalRate: 1
+  plugins:
+    metrics-by-endpoint: {}
+    publish-metrics:
+      - type: prometheus
+        pushgateway: "http://13.126.60.149:9090"
+        tags:
+          - "testname:http-metrics-endpoint"
+          - "appname:loadtest"
+scenarios:
+  - flow:
+      - get:
+          url: "/"
+      - get:
+          url: "/docs"
+      - get:
+          url: "/404"
